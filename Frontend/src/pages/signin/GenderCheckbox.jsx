@@ -1,4 +1,4 @@
-const GenderCheckbox = () => {
+const GenderCheckbox = ({handleGenderChange, selectedGender}) => {
   return (
     <div className="flex mt-1">
       <div className=" form-control">
@@ -8,6 +8,8 @@ const GenderCheckbox = () => {
             type="radio"
             name="radio-7"
             className="radio radio-info"
+            checked = {selectedGender === 'male'}
+            onChange={() => handleGenderChange("male")}
           />
         </label>
       </div>
@@ -19,6 +21,8 @@ const GenderCheckbox = () => {
             type="radio"
             name="radio-7"
             className="radio radio-info"
+            checked = {selectedGender === 'female'}
+            onChange={() => handleGenderChange("female")}
           />
         </label>
       </div>

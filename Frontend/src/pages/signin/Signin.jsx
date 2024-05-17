@@ -1,6 +1,27 @@
+import { Link } from "react-router-dom";
 import GenderCheckbox from "./GenderCheckbox";
+import { useState } from "react";
+import useSignIn from "../../hooks/useSignIn";
+import toast from "react-hot-toast";
 
 function Signin() {
+  const [input, setInput] = useState({
+    fullname: "",
+    username: "",
+    password: "",
+    confirmPassword: "",
+    gender: ""
+  })
+
+  const {loading, signin} = useSignIn()
+  const handleGenderCheckbox = (gender) =>{
+    setInput({...input, gender});
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await signin(input)
+  }
   return (
     <div className=" flex flex-col items-center justify-center min-w-96 mx-auto z-50 ">
       <div className="w-full p-6 rounded-lg shadow-md bg-indigo-900  bg-clip-padding backdrop-filter backdrop-blur-none bg-opacity-40">
@@ -9,7 +30,7 @@ function Signin() {
           <span className=" text-red-400 mx-2">ChatApp</span>
         </h1>
 
-        <form>
+        <form onSubmit={handleSubmit}>
             <div>
               <label className="label p-2">
                 <span className="text-base label-text">FullName</span>
@@ -20,6 +41,7 @@ function Signin() {
                   type="text"
                   className="grow"
                   placeholder="Enter Fullname"
+                  onChange={(e) => setInput({...input, fullname: e.target.value})}
                 />
               </div>
             </div>
@@ -42,6 +64,7 @@ function Signin() {
                   type="text"
                   className="grow"
                   placeholder="Enter Username"
+                  onChange={(e) => setInput({...input, username: e.target.value})}
                 />
               </div>
             </div>
@@ -64,7 +87,12 @@ function Signin() {
                     clipRule="evenodd"
                   />
                 </svg>
-                <input type="password" className="grow" placeholder="Enter Password" />
+                <input 
+                type="password" 
+                className="grow" 
+                placeholder="Enter Password" 
+                onChange={(e) => setInput({...input, password: e.target.value})}
+                />
               </div>
             </div>
 
@@ -86,18 +114,25 @@ function Signin() {
                     clipRule="evenodd"
                   />
                 </svg>
-                <input type="password" className="grow" placeholder="Enter Password" />
+                <input 
+                type="password" 
+                className="grow" 
+                placeholder="Enter Confirm Password" 
+                onChange={(e) => setInput({...input, confirmPassword: e.target.value})}
+                />
               </div>
             </div>
 
-            <GenderCheckbox/>
+            <GenderCheckbox handleGenderChange= {handleGenderCheckbox} selectedGender={input.gender}/>
 
-            <a href="#" className="text-sm hover:underline hover:text-blue-500 mt-2 inline-block">
+            <Link to="/login" className="text-sm hover:underline hover:text-blue-500 mt-2 inline-block">
               Already have an account?
-            </a>
+            </Link>
 
             <div>
-              <button className="btn btn-block btn-sm mt-2">SignUp</button>
+              <button className="btn btn-block btn-sm mt-2" disabled= {loading}>
+                {loading? <span className="loading loading-spinner"></span> : "Sign In"}
+              </button>
             </div>
         </form>
       </div>
