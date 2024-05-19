@@ -49,7 +49,7 @@ const useSignIn = () => {
 export default useSignIn
 
 function checkValidity (fullname, username, password, confirmPassword, gender){
-    console.log(fullname, username, password, confirmPassword, gender)
+    //console.log(fullname, username, password, confirmPassword, gender)
     if(!fullname || !username ||!password || !confirmPassword || !gender){
         //console.log("Please fill all the details")
         toast.error("Please fill all the details");
